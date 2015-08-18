@@ -1,0 +1,253 @@
+From danny.gottlieb at gmail.com  Fri Oct 21 05:36:58 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Thu, 20 Oct 2005 23:36:58 -0400
+Subject: [Threec-dev] Starting to create the barebones website
+Message-ID: <11b871c50510202036r152ff134h92b48f33ee741626@mail.gmail.com>
+
+I started making some progress on the website such as creating users
+and being able to log in (not that I have started sessions yet). 
+However I need the database schema plus any modifications you think
+are necessary for it.  Also I'm going to hold off on making the wiki
+section because if we want anything semi-nice for a wiki, the DB for
+the wiki pages is going to be a bit complex.
+
+
+From rrenaud at gmail.com  Sat Oct 22 02:11:24 2005
+From: rrenaud at gmail.com (Rob Renaud)
+Date: Fri, 21 Oct 2005 20:11:24 -0400
+Subject: [Threec-dev] Interesting links related to linux sandboxes
+Message-ID: <a5d9c4580510211711w5988c797t90c9ffea849a6e3@mail.gmail.com>
+
+I am leaning toward using Xen rather than User Mode Linux based on the
+following link.
+
+http://uml.harlowhill.com/index.php/Security
+
+I'd actually like to find a similiar discussion about Xen.
+
+Another interesting discussion is here by Dave Harding.
+
+http://www.livejournal.com/users/ru_linux_geek/18922.html
+
+
+From rrenaud at gmail.com  Sun Oct 23 02:28:20 2005
+From: rrenaud at gmail.com (Rob Renaud)
+Date: Sat, 22 Oct 2005 20:28:20 -0400
+Subject: [Threec-dev] Trouble running threec
+Message-ID: <a5d9c4580510221728p223434b4raebc80d23953b918@mail.gmail.com>
+
+I installed TurboGears with ez_setup.py, and then I run the server with
+
+rob:~/code/trunk/threec$ python threec-start.py
+
+And it seems to start up fine, but then when I visit localhost:8080, I
+get the following error message,
+
+500 Internal error
+
+Server got itself in trouble
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/CherryPy-2.1.0_rc2-py2.4.egg/cherrypy/_cphttptools.py",
+line 271, in run
+    main()
+  File "/usr/lib/python2.4/site-packages/CherryPy-2.1.0_rc2-py2.4.egg/cherrypy/_cphttptools.py",
+line 502, in main
+    body = page_handler(*args, **cherrypy.request.paramMap)
+  File "/usr/lib/python2.4/site-packages/TurboGears-0.8a3-py2.4.egg/turbogears/controllers.py",
+line 122, in newfunc
+    return controllers._process_output(tg_format, output, html)
+  File "/usr/lib/python2.4/site-packages/TurboGears-0.8a3-py2.4.egg/turbogears/controllers.py",
+line 38, in _process_output
+    output = view.render(output, tg_format, template=template)
+  File "/usr/lib/python2.4/site-packages/TurboGears-0.8a3-py2.4.egg/turbogears/view.py",
+line 99, in render
+    return t.serialize(encoding="utf-8", output=format, fragment=fragment)
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/__init__.py",
+line 231, in serialize
+    return serializer.serialize(self, encoding, fragment)
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/serialization.py",
+line 47, in serialize
+    text = list(self.generate(stream, encoding, fragment))
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/serialization.py",
+line 301, in generate
+    for ev, item in self.apply_filters(stream):
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/serialization.py",
+line 73, in balancing_filter
+    for ev, item in stream:
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/pull.py",
+line 179, in _coalesce
+    for ev, item in stream:
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/filter.py",
+line 21, in transform_filter
+    for ev, item in apply_matches(stream, template, templates, apply_func):
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/filter.py",
+line 31, in apply_matches
+    item = stream.expand()
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/pull.py",
+line 87, in expand
+    for ev, item in self._iter:
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/pull.py",
+line 152, in _track
+    for p in stream:
+  File "/usr/lib/python2.4/site-packages/kid-0.7adev_r186-py2.4.egg/kid/pull.py",
+line 179, in _coalesce
+    for ev, item in stream:
+  File "/home/rob/code/trunk/threec/threec/templates/homepage.py",
+line 79, in _pull
+NameError: name 'has_key' is not defined
+
+
+From danny.gottlieb at gmail.com  Mon Oct 24 05:44:15 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Sun, 23 Oct 2005 23:44:15 -0400
+Subject: [Threec-dev] An experiment that has to do with our project
+Message-ID: <11b871c50510232044k9a6cb1dy9853c06c96ed1647@mail.gmail.com>
+
+http://pyre.third-bit.com/pyweb/index.html
+
+This person is trying the major web development frameworks for python
+and blogging about them.  Haven't read the Cherrpy one but it most
+likely doesn't effect me.  Turbogears does a good job glueing the
+things together and picked a templating library in Kid that I've found
+to be easier to pick up than some others I recently looked at. 
+Unfortunately there was no mention in performance for Twisted and I
+doubt any mention will be made considering this is an experiment for
+being able to pick up the frameworks and their documentation, which
+twisted apparently severely lacked a few months back
+
+
+From rrenaud at gmail.com  Tue Oct 25 04:34:03 2005
+From: rrenaud at gmail.com (Rob Renaud)
+Date: Mon, 24 Oct 2005 22:34:03 -0400
+Subject: [Threec-dev] Yet another python exception when running threec
+Message-ID: <a5d9c4580510241934r38bcc9a2ue5d415b169e5ee30@mail.gmail.com>
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/CherryPy-2.1.0_rc2-py2.4.egg/cherrypy/_cphttptools.py",
+line 271, in run
+    main()
+  File "/usr/lib/python2.4/site-packages/CherryPy-2.1.0_rc2-py2.4.egg/cherrypy/_cphttptools.py",
+line 502, in main
+    body = page_handler(*args, **cherrypy.request.paramMap)
+  File "/usr/lib/python2.4/site-packages/TurboGears-0.8a3-py2.4.egg/turbogears/controllers.py",
+line 121, in newfunc
+    output = func(self, *args, **kw)
+  File "/home/rob/code/trunk/threec/threec/controllers.py", line 68,
+in createaccount
+    user = User.byUser(kw['username'])
+  File "<string>", line 1, in <lambda>
+  File "/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/main.py",
+line 1252, in _SO_fetchAlternateID
+    result, obj = cls._findAlternateID(name, dbName, value, connection)
+  File "/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/main.py",
+line 1243, in _findAlternateID
+    return (connection or cls._connection)._SO_selectOneAlt(
+  File "/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/dbconnection.py",
+line 848, in __get__
+    return self.getConnection()
+  File "/usr/lib/python2.4/site-packages/TurboGears-0.8a3-py2.4.egg/turbogears/database.py",
+line 25, in getConnection
+    conn = sqlobject.connectionForURI(self.uri)
+  File "/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/dbconnection.py",
+line 913, in connectionForURI
+    conn = self.schemeBuilders[scheme]().connectionFromURI(uri)
+  File "/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/sqlite/sqliteconnection.py",
+line 59, in connectionFromURI
+    return cls(filename=path, **args)
+  File "/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/sqlite/sqliteconnection.py",
+line 47, in __init__
+    self._conn = sqlite.connect(self.filename, **opts)
+  File "/usr/lib/python2.4/site-packages/sqlite/__init__.py", line 61,
+in connect
+    return Connection(*args, **kwargs)
+  File "/usr/lib/python2.4/site-packages/sqlite/main.py", line 445, in __init__
+    self.db = _sqlite.connect(database, mode)
+DatabaseError: unable to open database:
+/Users/dgott/programming/python/threec/alldata.db
+
+I see this comes from trunk/threec/dev.cfg.  I think we should really
+design the software so we don't have to hardcode things like this, as
+it will make it much easier for others to deploy the code.  Is there
+someway to make that file get loaded from the users home directory?  I
+guess it just involves some hacking of threec-start.py.
+
+The logic should be something like
+
+if found_config_in_home_dir:
+   load_from_home_dir
+else:
+   cp template_from_current_dir to_homedir
+   load_from_home_dir
+
+
+From danny.gottlieb at gmail.com  Wed Oct 26 04:45:46 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Tue, 25 Oct 2005 22:45:46 -0400
+Subject: [Threec-dev] Holding off on sessions, going to work on database stuff
+Message-ID: <11b871c50510251945x489df01ava59ccc452e92c3d5@mail.gmail.com>
+
+http://groups.google.com/group/turbogears/browse_thread/thread/0dd51a27a507835b/5a36e5de15ce752d?lnk=raot#5a36e5de15ce752d
+
+Sessions are going to be incorporated into turbogears directly in the
+upcoming patches so I am just going to hold off until then and in the
+meantime put together some fake data for submissions and contests to
+try and flesh out how SQLObject works.
+
+
+From danny.gottlieb at gmail.com  Wed Oct 26 05:24:55 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Tue, 25 Oct 2005 23:24:55 -0400
+Subject: [Threec-dev] Suggestions
+Message-ID: <11b871c50510252024h70d41037yee5a617bec36f794@mail.gmail.com>
+
+On the slightly revised database?  I mainly added a submission table. 
+As far as having integer IDs for the entries I think SQLObject does
+all that behind the scene but will be reading the docs more thoroughly
+soon.  AlternateID lets me grab a record directly via a function call
+to that field, i think it makes another table that maps the name to
+the ID or I could just be making all of this up.  Also feel free to
+add in useful function APIs to navigate the database to get anything
+we want from anything it's related to.  This should be pretty easy
+once I (if ever) learn databases.
+
+
+From rrenaud at gmail.com  Wed Oct 26 06:01:32 2005
+From: rrenaud at gmail.com (Rob Renaud)
+Date: Wed, 26 Oct 2005 00:01:32 -0400
+Subject: [Threec-dev] Suggestions
+In-Reply-To: <11b871c50510252024h70d41037yee5a617bec36f794@mail.gmail.com>
+References: <11b871c50510252024h70d41037yee5a617bec36f794@mail.gmail.com>
+Message-ID: <a5d9c4580510252101s416c26cagf66dcfd1a31069c1@mail.gmail.com>
+
+I looked a little bit at the docs for SQLObject.  I pulled them down
+onto my laptop too.  It looks pretty cool.  It seems like it makes DB
+interaction a breeze.
+
+On 10/25/05, Daniel Gottlieb <danny.gottlieb at gmail.com> wrote:
+> On the slightly revised database?  I mainly added a submission table.
+> As far as having integer IDs for the entries I think SQLObject does
+> all that behind the scene but will be reading the docs more thoroughly
+> soon.  AlternateID lets me grab a record directly via a function call
+> to that field, i think it makes another table that maps the name to
+> the ID or I could just be making all of this up.  Also feel free to
+> add in useful function APIs to navigate the database to get anything
+> we want from anything it's related to.  This should be pretty easy
+> once I (if ever) learn databases.
+> _______________________________________________
+> Threec-dev mailing list
+> Threec-dev at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/threec-dev
+>
+
+
+From danny.gottlieb at gmail.com  Fri Oct 28 05:36:04 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Thu, 27 Oct 2005 23:36:04 -0400
+Subject: [Threec-dev] New database model
+Message-ID: <11b871c50510272036x59521dd7jf3d95616e0c6592a@mail.gmail.com>
+
+Learned a little bit and changed the database around, this look
+alright?  Do I have all the information there?
+
+

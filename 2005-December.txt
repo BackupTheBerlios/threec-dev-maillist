@@ -1,0 +1,11 @@
+From danny.gottlieb at gmail.com  Fri Dec  2 15:20:08 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Fri, 2 Dec 2005 09:20:08 -0500
+Subject: [Threec-dev] more session stuff
+Message-ID: <11b871c50512020620j79afaa89q25c05b160f75cccc@mail.gmail.com>
+
+http://groups.google.com/group/cherrypy-devel/browse_frm/thread/120bce064213b096/a476f5d1a0f982a4#a476f5d1a0f982a4
+
+http://groups.google.com/group/turbogears/browse_thread/thread/be23dd8419546edc
+
+

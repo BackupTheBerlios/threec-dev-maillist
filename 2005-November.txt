@@ -1,0 +1,402 @@
+From danny.gottlieb at gmail.com  Wed Nov  2 19:51:05 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Wed, 2 Nov 2005 13:51:05 -0500
+Subject: [Threec-dev] Dont think there will be any issues accessing the DB with SQLObject if need be
+Message-ID: <11b871c50511021051i1665fbd3u9e1003086d38e7b1@mail.gmail.com>
+
+http://www.groovie.org/articles/2005/11/01/how-to-use-database-agnostic-sql-in-sqlobject
+
+
+From danny.gottlieb at gmail.com  Thu Nov 10 04:51:46 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Wed, 9 Nov 2005 22:51:46 -0500
+Subject: [Threec-dev] Idea for code viewing
+Message-ID: <11b871c50511091951w60132a8et951829f0576b3581@mail.gmail.com>
+
+So maybe allowing for wiki comments on code will be enough but a more
+hardcore idea I was thinking would be to build in some sort of
+debugger mode that people can use for submissions that compiled.  Like
+let people follow the code line by line on some valid input.  Though
+this seems a little ridiculous and an invitation to security issues.
+
+Maybe instead we can add a nice API that allows people to writeup a
+tutorial on an algorithm along with code and shows how it works on
+inputs.
+
+These ideas are clearly nothing to put in anytime soon but as I was
+coding in the code viewing stuff it popped into my head that something
+along these lines would be pretty fucking awesome as a learning
+utensil that might be able to extend beyond the applet and into the
+classroom.
+
+
+From danny.gottlieb at gmail.com  Fri Nov 11 05:47:21 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Thu, 10 Nov 2005 23:47:21 -0500
+Subject: [Threec-dev] Question of the night
+Message-ID: <11b871c50511102047s6251ec43j9c2b46646e53f9ee@mail.gmail.com>
+
+So Jimmy wants to make a new contest and he creates the barebones part
+of it, the name start and endtimes.  Now Jimmy is going to submit his
+zip file of the problems as well as a zip of the private portion of
+the problems (I/O to run programs on, time/memory limits etc) to the
+system and days and nights go by and all of a sudden its time for the
+contest to start.  The machine unzips the problems and via a nice XML
+script adds to the database the core properties of each problem as
+well as adding the problem statements to a url so people can view via
+the web.
+
+So instead of trying to explain the problem outright I gave a possible
+solution.  The problem is about the whole how do we let people make
+contests and add problems to their contest while at the same time
+keeping the problems and more importantly their input and output
+secret to the system hopefully implying secret to users.  So yea my
+idea is some downloadable application that allows contest hosters to
+enter problem data on their own computer and it will zip/form this
+script/password the file until the contest is about to begin.
+
+What I don't like about this is how hefty this can be.  Perhaps
+allowing them to upload these things normally and leaving the items
+hidden isn't really that bad.
+
+
+From rrenaud at gmail.com  Fri Nov 11 15:10:40 2005
+From: rrenaud at gmail.com (Rob Renaud)
+Date: Fri, 11 Nov 2005 09:10:40 -0500
+Subject: [Threec-dev] Question of the night
+In-Reply-To: <11b871c50511102047s6251ec43j9c2b46646e53f9ee@mail.gmail.com>
+References: <11b871c50511102047s6251ec43j9c2b46646e53f9ee@mail.gmail.com>
+Message-ID: <a5d9c4580511110610j79fe5da5p91ef55564f4f871@mail.gmail.com>
+
+On 11/10/05, Daniel Gottlieb <danny.gottlieb at gmail.com> wrote:
+> So Jimmy wants to make a new contest and he creates the barebones part
+> of it, the name start and endtimes.  Now Jimmy is going to submit his
+> zip file of the problems as well as a zip of the private portion of
+> the problems (I/O to run programs on, time/memory limits etc) to the
+> system and days and nights go by and all of a sudden its time for the
+> contest to start.  The machine unzips the problems and via a nice XML
+> script adds to the database the core properties of each problem as
+> well as adding the problem statements to a url so people can view via
+> the web.
+>
+> So instead of trying to explain the problem outright I gave a possible
+> solution.  The problem is about the whole how do we let people make
+> contests and add problems to their contest while at the same time
+> keeping the problems and more importantly their input and output
+> secret to the system hopefully implying secret to users.  So yea my
+> idea is some downloadable application that allows contest hosters to
+> enter problem data on their own computer and it will zip/form this
+> script/password the file until the contest is about to begin.
+>
+> What I don't like about this is how hefty this can be.  Perhaps
+> allowing them to upload these things normally and leaving the items
+> hidden isn't really that bad.
+
+Are you sure you really want the contents to be kept secret from the
+database?  It seems like the contest would be an all our nothing,
+throw a shitload of code over the wall and hope it doesn't hit the fan
+kind of deal.  How is the contest creator going to know that for
+example, his judging programs will run on our system?  How is he going
+to tune time limits to the judge without actually testing them on the
+judge?
+
+Do you think we gain that much secrecy by not hosting their not yet
+public data?  Is it just that the admins of the box cannot be trusted
+with a not yet released contest data lying around where we can peek at
+it?  What if we store the contest data encrypted, and give the contest
+host the option (maybe require it) of keeping the key on her system. 
+Then when she wants to edit the contest, she provides the key during
+her session, which we intentionally keep only as long as the session
+is running.
+
+I agree that I don't think we should do much client side development,
+and for the client side stuff, try to make it as portable and small as
+is reasonable.
+> _______________________________________________
+> Threec-dev mailing list
+> Threec-dev at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/threec-dev
+>
+
+
+From danny.gottlieb at gmail.com  Fri Nov 11 15:49:05 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Fri, 11 Nov 2005 09:49:05 -0500
+Subject: [Threec-dev] Question of the night
+In-Reply-To: <a5d9c4580511110610j79fe5da5p91ef55564f4f871@mail.gmail.com>
+References: <11b871c50511102047s6251ec43j9c2b46646e53f9ee@mail.gmail.com>
+	 <a5d9c4580511110610j79fe5da5p91ef55564f4f871@mail.gmail.com>
+Message-ID: <11b871c50511110649n22c2769jd3c03a88d236771@mail.gmail.com>
+
+A thread to follow up on
+http://groups.google.com/group/turbogears/browse_thread/thread/8eeffda7caeaf978
+
+
+From danny.gottlieb at gmail.com  Sat Nov 12 07:40:59 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Sat, 12 Nov 2005 01:40:59 -0500
+Subject: [Threec-dev] The latest svn update (2005-11-12)
+Message-ID: <11b871c50511112240x4b279c7aw813507fc73209db2@mail.gmail.com>
+
+a lot more things are working such as the ability to create a new
+contest, change the start/end times along with its name.  Also you can
+add problems to the contest as well as remove problems.  The second
+version of this page will allow for the user to upload a file for the
+problem statement as well as a field for the I/O for the problem.
+
+Despite deciding against the whole zipping a file that the server will
+open up before the contest and load things, I do think its a good idea
+to let people download a script they can put in the directory that
+will find all of the properly formatted problem files which can just
+be uploaded all at once to save the tedium of adding in one problem at
+a time and selecting the statement/input/output files for each.
+
+
+From rrenaud at gmail.com  Mon Nov 21 05:10:39 2005
+From: rrenaud at gmail.com (Rob Renaud)
+Date: Sun, 20 Nov 2005 23:10:39 -0500
+Subject: [Threec-dev] Frontend <-> Judger protocol
+Message-ID: <a5d9c4580511202010p56d90a39r9cae40151346948c@mail.gmail.com>
+
+There needs to be at least 3 messages, whose fields consist of the
+following, at least the following fields.  It's likely that this won't
+be enough messages, and that this messages themselves will need to be
+more bulky.
+
+The first is a InitJudgeMessage, consisting of
+optional default config, which is used if a problem specific config is omitted
+for each problem
+   a problem id, which is the id of the problem in the DB
+   a judger output/program
+   optional problem specific configuration
+      time limit
+      memory limit
+      source code limit?
+
+There is also a JudgeRequestMessage, consisting of
+a problem id
+a programming language
+program source code
+userid?
+
+Finally, there is a JudgeResponseMessage, consisting of
+an accepted/rejected [maybe generalize this into a double, 0.0 being
+not correct at all, 1.0 being totally correct?]
+an optional failure reason, in the case of a failure
+an optional list of failed testcases
+an optional hint generated by the judge in the case of a common error?
+
+
+From danny.gottlieb at gmail.com  Mon Nov 21 05:14:14 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Sun, 20 Nov 2005 23:14:14 -0500
+Subject: [Threec-dev] Design Discussion Topics
+Message-ID: <11b871c50511202014t3575e42ak4bd7563af89fd268@mail.gmail.com>
+
+This was ripped from the wikipedia page at Rob's request in an effort
+to organize what information goes where so please ignore the
+references to prior paragraphs.
+
+Switching gears (which will probably at some point warrant its own
+wikipage), I'll start discussing the issues presented that affect the
+product from the users perspective.  But first a more specific look at
+the goals of the entire project.  First and foremost, we want C^3 (or
+ThreeC) to run out of the box.  One or two simple, conveniently placed
+command line arguments to start the webserver (and the judger in the
+secure competition mode, and maybe a database too, I don't know all
+that much about them).  Everything related to the actual contest
+hosting will be modified via a web interface.  That in itself is a
+huge UI issue but before we get into that, I want to stay general and
+talk about who runs contests and how to run contests.
+
+The question as to who runs contests probably has different answers
+depending on who you ask.  If you ask myself or Rob, it means anyone
+that wants to can do so and that person can do so publically or
+privately.  We do intend on running this application for the rest of
+the web, and letting others host contests as they please with our
+servers.  Clearly there are security issues, that's Rob's job.
+
+If you ask someone else the question of who runs contests on their
+server the answer may (justifiably) be, only they do.  If this is the
+case it should be easy to choose who can and cannot host contests,
+participate in contests and the like.
+
+We want this software to be used in academic instituions (read
+Colleges/Universities/High Schools/anyplace where students are
+learning to code or solve problems or whatever).  Settings should be
+able to be saved between sessions.  If someone wants to use this for
+weekly local contests, they should be able to upload a tar of the
+problemset and solutions or just put them in predetermined
+directories, run the startup script and not have to look back.
+
+People without access to the hosting server should be able to use the
+web interface to do anything someone with access can do (pertaining to
+the contest hosting of course).  This interface should be intuitive,
+complete and to put it plainly, kick major ass.  Problems may arise
+during the contest where problems or solutions or judging programs may
+need to be removed/changed along with statistical changes for teams
+that fell victim (or beneficiary) to errors.  The goal of the UI is to
+minimize the number of page loads but remain intuitive and
+uncluttered.  Those aspects certainly oppose one-another but I guess
+this will be a test for our innovation.
+
+Next (still related) Topic - Uploading problemsets.  Selecting a
+problem, its input file, output file, and possibly an alternate judger
+to upload is tedious.  Doing so 6-8 times is aggravating.  The
+solution is to allow tar or zip files to be uploaded which we will
+unzip.  Then arises the issue of figuring out which file is for what,
+so we have to put some thought into a naming/formatting convention
+that contest hosters will do while they put the files together instead
+of a timeconsuming afterthought.  Allow for easy manipulation of
+problemsets before they go live such as ordering of presentation in
+the contest, live editting for typos to remove any need for
+re-uploading except in serious cases (an incorrect output is probably
+easier to just replace than scrolling through thousands of cases
+fixing them by hand).
+
+Active Contest Details - In addition to being able to change
+problems/input/output/etc... the ability to easily (automatically?)
+fix scores/rejudge problems is certainly on the list of things to do. 
+Add a notification message thing would probably be helpful instead of
+getting a popup box saying your submission was accepted, a submission
+that was marked incorrect an hour ago, on a problem you havent
+submitted to in 50 minutes.  I digress.
+
+Getting problems to the competitors - When a contest begins theres a
+mad rush to download the problems on UVA/Topcoder.  UVA significantly
+slows down, TopCoder actually has a hardcore server and a massive
+pipe.  The proposed solution is to allow anyone to download a
+passworded tar/zip of the problems ahead of time, and when the contest
+starts, the password is posted, crisis averted.  I could have sworn I
+stole this idea from somewhere, but apparently Rob thought it was a
+good idea and didn't accuse me of ripping it off from elsewhere so
+maybe I really am a genius, but I don't think so.
+
+Things for the Competitors - We want to integrate a method of
+submitting via emacs.  This will prove difficult with the current
+state of cherrpy which basically only allows sessions through cookies.
+ Someone else posted on the [http://groups.google.com/group/turbogears
+Turbogears Google Groups] which no one responded to (well he posted
+along with some other questions, people responded to those other
+ones).  We will certainly have a web page submission just like UVA,
+but I'd really like a nicer way to submit that doesn't involve
+searching through directories for a file, or copy/pasting files into a
+web form (I'm still paranoid that doing so screws up stuff, especially
+in a language like Python that uses whitespace indentation in its
+syntax).
+
+Excuse the layout change, on the upcoming concerns.
+
+Allow for distributed webservers that serve copies of the same files
+for distributed events.  Also requires a distributed design for
+statistical collection and display.
+
+Custom RSS feeds, requires a gmail notifier type thing where the login
+and password are displayed as a garbled hex digest from sha, possibly
+interweaving the characters also, but that can easily be reverse
+engineered if people knew we were using sha.  Or maybe just make it
+insecure, paste in the login name as an argument.  Who cares if
+someone sees your feeds.  Well if your feed contains sensitive
+information such as hosted contests don't post any details about the
+"article", then again that doesn't change without your consent, oh I
+don't know....
+
+Let contest hosters supply a list of people that can view/edit
+contests they plan on hosting.
+
+Stats
+-------
+1. Customizable scoring for contests
+a. some format for returning number of correct cases vs total cases
+and the percentage.
+b. can just judge correct or incorrect
+c. penalities for incorrect
+d. points can be variable for problems - even dynamically variable
+(actual values wont be computed until the end of the match)
+2. Allow for customizable rating systems.
+a. Submission times and number of submissions completely describe a match?
+b. some mechanism for seeing when a problem was viewed?  can't use the
+zip/password method obviously.  Very open to cheating.
+c. what stats should the program automatically calculate and provide? 
+Intend to allow for tedious common tasks to be done by us, but don't
+calculate things that people don't use.  They just add clutter and
+make it difficult to find what is wanted. - Thinking total number of
+submissions/correct submissions.  Total correctness, averages medians
+standard deviations.... ??
+
+Configuration cleanness
+--------
+No (mandatory) config files!!!!
+All settings should be web accessable and modifyable by admin users.
+For example forcing contest hosters to only allow securely judged contests.
+
+
+From danny.gottlieb at gmail.com  Mon Nov 21 05:43:32 2005
+From: danny.gottlieb at gmail.com (Daniel Gottlieb)
+Date: Sun, 20 Nov 2005 23:43:32 -0500
+Subject: [Threec-dev] Frontend <-> Judger protocol
+In-Reply-To: <a5d9c4580511202010p56d90a39r9cae40151346948c@mail.gmail.com>
+References: <a5d9c4580511202010p56d90a39r9cae40151346948c@mail.gmail.com>
+Message-ID: <11b871c50511202043j32865aemac63dbde39fde33@mail.gmail.com>
+
+On 11/20/05, Rob Renaud <rrenaud at gmail.com> wrote:
+
+> There needs to be at least 3 messages, whose fields consist of the
+> following, at least the following fields.  It's likely that this won't
+> be enough messages, and that this messages themselves will need to be
+> more bulky.
+
+Stop right there, we're not going to just implement the basics for the
+heck of it and start hacking in stuff a week later.  Going to think
+this through a little bit before, here let me help.
+
+> The first is a InitJudgeMessage, consisting of
+> optional default config, which is used if a problem specific config is omitted
+> for each problem
+>    a problem id, which is the id of the problem in the DB
+>    a judger output/program
+>    optional problem specific configuration
+>       time limit
+>       memory limit
+>       source code limit?
+
+What if the input/output has to be updated mid contest?  The message
+should be generalized to create if the information doesn't exist and
+overwrite if it does.  As a side note, need I stress secure
+communication between the webserver and the judger?
+
+> There is also a JudgeRequestMessage, consisting of
+> a problem id
+> a programming language
+> program source code
+> userid?
+
+So in an effort to keep the webserver stateless when handling
+submissions, I suggest the webserver tagging submissions with a
+timestamp that the judger simply echoes back thus all the information
+needed to log the contest is included in one simple message.  Secure
+communication might be important here too.
+
+> Finally, there is a JudgeResponseMessage, consisting of
+> an accepted/rejected [maybe generalize this into a double, 0.0 being
+> not correct at all, 1.0 being totally correct?]
+> an optional failure reason, in the case of a failure
+> an optional list of failed testcases
+> an optional hint generated by the judge in the case of a common error?
+
+I was thinking for statistical purposes that the number of test cases
+passed and failed for each submission would be interesting if not
+useful.  However this poses a (potentially?) annoying problem of
+having to actually split the input output messages into test cases. 
+Perhaps this is why many UVA problems ask for the output to have case
+# prepended to solution output, to collect data for the
+problemsetter/their own private interests.  That bit actually clears
+up pretty much all of the issues presented except the probably
+pointless question of how wrong any given test case was.
+ _______________________________________________
+> Threec-dev mailing list
+> Threec-dev at lists.berlios.de
+> http://lists.berlios.de/mailman/listinfo/threec-dev
+>
+
+

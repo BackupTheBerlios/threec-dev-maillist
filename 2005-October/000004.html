@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Threec-dev] Yet another python exception when running threec
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/threec-dev/2005-October/index.html" >
+   <LINK REL="made" HREF="mailto:threec-dev%40lists.berlios.de?Subject=Re%3A%20%5BThreec-dev%5D%20Yet%20another%20python%20exception%20when%20running%20threec&In-Reply-To=%3Ca5d9c4580510241934r38bcc9a2ue5d415b169e5ee30%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000003.html">
+   <LINK REL="Next"  HREF="000005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Threec-dev] Yet another python exception when running threec</H1>
+    <B>Rob Renaud</B> 
+    <A HREF="mailto:threec-dev%40lists.berlios.de?Subject=Re%3A%20%5BThreec-dev%5D%20Yet%20another%20python%20exception%20when%20running%20threec&In-Reply-To=%3Ca5d9c4580510241934r38bcc9a2ue5d415b169e5ee30%40mail.gmail.com%3E"
+       TITLE="[Threec-dev] Yet another python exception when running threec">rrenaud at gmail.com
+       </A><BR>
+    <I>Tue Oct 25 04:34:03 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000003.html">[Threec-dev] An experiment that has to do with our project
+</A></li>
+        <LI>Next message: <A HREF="000005.html">[Threec-dev] Holding off on sessions, going to work on database stuff
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Traceback (most recent call last):
+  File &quot;/usr/lib/python2.4/site-packages/CherryPy-2.1.0_rc2-py2.4.egg/cherrypy/_cphttptools.py&quot;,
+line 271, in run
+    main()
+  File &quot;/usr/lib/python2.4/site-packages/CherryPy-2.1.0_rc2-py2.4.egg/cherrypy/_cphttptools.py&quot;,
+line 502, in main
+    body = page_handler(*args, **cherrypy.request.paramMap)
+  File &quot;/usr/lib/python2.4/site-packages/TurboGears-0.8a3-py2.4.egg/turbogears/controllers.py&quot;,
+line 121, in newfunc
+    output = func(self, *args, **kw)
+  File &quot;/home/rob/code/trunk/threec/threec/controllers.py&quot;, line 68,
+in createaccount
+    user = User.byUser(kw['username'])
+  File &quot;&lt;string&gt;&quot;, line 1, in &lt;lambda&gt;
+  File &quot;/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/main.py&quot;,
+line 1252, in _SO_fetchAlternateID
+    result, obj = cls._findAlternateID(name, dbName, value, connection)
+  File &quot;/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/main.py&quot;,
+line 1243, in _findAlternateID
+    return (connection or cls._connection)._SO_selectOneAlt(
+  File &quot;/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/dbconnection.py&quot;,
+line 848, in __get__
+    return self.getConnection()
+  File &quot;/usr/lib/python2.4/site-packages/TurboGears-0.8a3-py2.4.egg/turbogears/database.py&quot;,
+line 25, in getConnection
+    conn = sqlobject.connectionForURI(self.uri)
+  File &quot;/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/dbconnection.py&quot;,
+line 913, in connectionForURI
+    conn = self.schemeBuilders[scheme]().connectionFromURI(uri)
+  File &quot;/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/sqlite/sqliteconnection.py&quot;,
+line 59, in connectionFromURI
+    return cls(filename=path, **args)
+  File &quot;/usr/lib/python2.4/site-packages/SQLObject-0.7.0-py2.4.egg/sqlobject/sqlite/sqliteconnection.py&quot;,
+line 47, in __init__
+    self._conn = sqlite.connect(self.filename, **opts)
+  File &quot;/usr/lib/python2.4/site-packages/sqlite/__init__.py&quot;, line 61,
+in connect
+    return Connection(*args, **kwargs)
+  File &quot;/usr/lib/python2.4/site-packages/sqlite/main.py&quot;, line 445, in __init__
+    self.db = _sqlite.connect(database, mode)
+DatabaseError: unable to open database:
+/Users/dgott/programming/python/threec/alldata.db
+
+I see this comes from trunk/threec/dev.cfg.  I think we should really
+design the software so we don't have to hardcode things like this, as
+it will make it much easier for others to deploy the code.  Is there
+someway to make that file get loaded from the users home directory?  I
+guess it just involves some hacking of threec-start.py.
+
+The logic should be something like
+
+if found_config_in_home_dir:
+   load_from_home_dir
+else:
+   cp template_from_current_dir to_homedir
+   load_from_home_dir
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000003.html">[Threec-dev] An experiment that has to do with our project
+</A></li>
+	<LI>Next message: <A HREF="000005.html">[Threec-dev] Holding off on sessions, going to work on database stuff
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/threec-dev">More information about the Threec-dev
+mailing list</a><br>
+</body></html>

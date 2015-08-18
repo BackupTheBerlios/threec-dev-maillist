@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Threec-dev] Design Discussion Topics
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/threec-dev/2005-November/index.html" >
+   <LINK REL="made" HREF="mailto:threec-dev%40lists.berlios.de?Subject=Re%3A%20%5BThreec-dev%5D%20Design%20Discussion%20Topics&In-Reply-To=%3C11b871c50511202014t3575e42ak4bd7563af89fd268%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000017.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Threec-dev] Design Discussion Topics</H1>
+    <B>Daniel Gottlieb</B> 
+    <A HREF="mailto:threec-dev%40lists.berlios.de?Subject=Re%3A%20%5BThreec-dev%5D%20Design%20Discussion%20Topics&In-Reply-To=%3C11b871c50511202014t3575e42ak4bd7563af89fd268%40mail.gmail.com%3E"
+       TITLE="[Threec-dev] Design Discussion Topics">danny.gottlieb at gmail.com
+       </A><BR>
+    <I>Mon Nov 21 05:14:14 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000017.html">[Threec-dev] Frontend &lt;-&gt; Judger protocol
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This was ripped from the wikipedia page at Rob's request in an effort
+to organize what information goes where so please ignore the
+references to prior paragraphs.
+
+Switching gears (which will probably at some point warrant its own
+wikipage), I'll start discussing the issues presented that affect the
+product from the users perspective.  But first a more specific look at
+the goals of the entire project.  First and foremost, we want C^3 (or
+ThreeC) to run out of the box.  One or two simple, conveniently placed
+command line arguments to start the webserver (and the judger in the
+secure competition mode, and maybe a database too, I don't know all
+that much about them).  Everything related to the actual contest
+hosting will be modified via a web interface.  That in itself is a
+huge UI issue but before we get into that, I want to stay general and
+talk about who runs contests and how to run contests.
+
+The question as to who runs contests probably has different answers
+depending on who you ask.  If you ask myself or Rob, it means anyone
+that wants to can do so and that person can do so publically or
+privately.  We do intend on running this application for the rest of
+the web, and letting others host contests as they please with our
+servers.  Clearly there are security issues, that's Rob's job.
+
+If you ask someone else the question of who runs contests on their
+server the answer may (justifiably) be, only they do.  If this is the
+case it should be easy to choose who can and cannot host contests,
+participate in contests and the like.
+
+We want this software to be used in academic instituions (read
+Colleges/Universities/High Schools/anyplace where students are
+learning to code or solve problems or whatever).  Settings should be
+able to be saved between sessions.  If someone wants to use this for
+weekly local contests, they should be able to upload a tar of the
+problemset and solutions or just put them in predetermined
+directories, run the startup script and not have to look back.
+
+People without access to the hosting server should be able to use the
+web interface to do anything someone with access can do (pertaining to
+the contest hosting of course).  This interface should be intuitive,
+complete and to put it plainly, kick major ass.  Problems may arise
+during the contest where problems or solutions or judging programs may
+need to be removed/changed along with statistical changes for teams
+that fell victim (or beneficiary) to errors.  The goal of the UI is to
+minimize the number of page loads but remain intuitive and
+uncluttered.  Those aspects certainly oppose one-another but I guess
+this will be a test for our innovation.
+
+Next (still related) Topic - Uploading problemsets.  Selecting a
+problem, its input file, output file, and possibly an alternate judger
+to upload is tedious.  Doing so 6-8 times is aggravating.  The
+solution is to allow tar or zip files to be uploaded which we will
+unzip.  Then arises the issue of figuring out which file is for what,
+so we have to put some thought into a naming/formatting convention
+that contest hosters will do while they put the files together instead
+of a timeconsuming afterthought.  Allow for easy manipulation of
+problemsets before they go live such as ordering of presentation in
+the contest, live editting for typos to remove any need for
+re-uploading except in serious cases (an incorrect output is probably
+easier to just replace than scrolling through thousands of cases
+fixing them by hand).
+
+Active Contest Details - In addition to being able to change
+problems/input/output/etc... the ability to easily (automatically?)
+fix scores/rejudge problems is certainly on the list of things to do. 
+Add a notification message thing would probably be helpful instead of
+getting a popup box saying your submission was accepted, a submission
+that was marked incorrect an hour ago, on a problem you havent
+submitted to in 50 minutes.  I digress.
+
+Getting problems to the competitors - When a contest begins theres a
+mad rush to download the problems on UVA/Topcoder.  UVA significantly
+slows down, TopCoder actually has a hardcore server and a massive
+pipe.  The proposed solution is to allow anyone to download a
+passworded tar/zip of the problems ahead of time, and when the contest
+starts, the password is posted, crisis averted.  I could have sworn I
+stole this idea from somewhere, but apparently Rob thought it was a
+good idea and didn't accuse me of ripping it off from elsewhere so
+maybe I really am a genius, but I don't think so.
+
+Things for the Competitors - We want to integrate a method of
+submitting via emacs.  This will prove difficult with the current
+state of cherrpy which basically only allows sessions through cookies.
+ Someone else posted on the [<A HREF="http://groups.google.com/group/turbogears">http://groups.google.com/group/turbogears</A>
+Turbogears Google Groups] which no one responded to (well he posted
+along with some other questions, people responded to those other
+ones).  We will certainly have a web page submission just like UVA,
+but I'd really like a nicer way to submit that doesn't involve
+searching through directories for a file, or copy/pasting files into a
+web form (I'm still paranoid that doing so screws up stuff, especially
+in a language like Python that uses whitespace indentation in its
+syntax).
+
+Excuse the layout change, on the upcoming concerns.
+
+Allow for distributed webservers that serve copies of the same files
+for distributed events.  Also requires a distributed design for
+statistical collection and display.
+
+Custom RSS feeds, requires a gmail notifier type thing where the login
+and password are displayed as a garbled hex digest from sha, possibly
+interweaving the characters also, but that can easily be reverse
+engineered if people knew we were using sha.  Or maybe just make it
+insecure, paste in the login name as an argument.  Who cares if
+someone sees your feeds.  Well if your feed contains sensitive
+information such as hosted contests don't post any details about the
+&quot;article&quot;, then again that doesn't change without your consent, oh I
+don't know....
+
+Let contest hosters supply a list of people that can view/edit
+contests they plan on hosting.
+
+Stats
+-------
+1. Customizable scoring for contests
+a. some format for returning number of correct cases vs total cases
+and the percentage.
+b. can just judge correct or incorrect
+c. penalities for incorrect
+d. points can be variable for problems - even dynamically variable
+(actual values wont be computed until the end of the match)
+2. Allow for customizable rating systems.
+a. Submission times and number of submissions completely describe a match?
+b. some mechanism for seeing when a problem was viewed?  can't use the
+zip/password method obviously.  Very open to cheating.
+c. what stats should the program automatically calculate and provide? 
+Intend to allow for tedious common tasks to be done by us, but don't
+calculate things that people don't use.  They just add clutter and
+make it difficult to find what is wanted. - Thinking total number of
+submissions/correct submissions.  Total correctness, averages medians
+standard deviations.... ??
+
+Configuration cleanness
+--------
+No (mandatory) config files!!!!
+All settings should be web accessable and modifyable by admin users.
+For example forcing contest hosters to only allow securely judged contests.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000017.html">[Threec-dev] Frontend &lt;-&gt; Judger protocol
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/threec-dev">More information about the Threec-dev
+mailing list</a><br>
+</body></html>
